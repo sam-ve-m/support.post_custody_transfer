@@ -5,7 +5,6 @@ from zenpy.lib.api_objects import User
 
 # Jormungandr
 from ..domain.validator import TicketValidator
-from ..repository.snapshot.repository import SnapshotRepository
 from ..repository.user.repository import UserRepository
 from ..repository.zendesk.repository import ZendeskRepository
 
@@ -13,7 +12,6 @@ from ..repository.zendesk.repository import ZendeskRepository
 class CreateTicketService:
     zendesk_repository = ZendeskRepository
     user_repository = UserRepository
-    snapshot_repository = SnapshotRepository
 
     @classmethod
     def set_tickets(cls, snapshot: str, params: TicketValidator, decoded_jwt: dict) -> bool:
