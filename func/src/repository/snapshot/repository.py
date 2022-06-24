@@ -1,35 +1,17 @@
-# Jormungandr
-from .tables.blocked_assets import BlockedAssetsTableBuilder
-from .tables.onboarding import OnboardingTableBuilder
-from .tables.pid import PIDTableBuilder
-from .tables.user_blocks import UserBlocksTableBuilder
-from .tables.vai_na_cola import VaiNaColaTableBuilder
-from .tables.wallet import WalletTableBuilder
-from .tables.warranty import WarrantyTableBuilder
-from .tables.warranty_assets import WarrantyAssetsTableBuilder
-from ...infrastructure.mongo.infrastructure import MongoInfrastructure
-from ...infrastructure.snapshot.infrastructure import SnapshotInfrastructure
+from http import HTTPStatus
+
+import requests
+from decouple import config
+
+from ...domain.snapshot.model import Snapshots
 
 
 class SnapshotRepository:
-    mongo_client = MongoInfrastructure.get_connection()
-    snapshot_infrastructure = SnapshotInfrastructure
-
     @classmethod
-    def snapshot_user_data(cls, jwt: str) -> str:
-        snapshots = cls.snapshot_infrastructure.request_snapshot(jwt)
-        snapshot = ("</br>"*2).join(filter(lambda x: x, (
-            PIDTableBuilder.create_table(snapshots.pid)
-            + OnboardingTableBuilder.create_table(snapshots.onboarding),
-
-            WalletTableBuilder.create_table(snapshots.wallet),
-            VaiNaColaTableBuilder.create_table(snapshots.vai_na_cola),
-
-            BlockedAssetsTableBuilder.create_table(snapshots.blocked_assets)
-            + UserBlocksTableBuilder.create_table(snapshots.user_blocks),
-
-            WarrantyAssetsTableBuilder.create_table(snapshots.warranty_assets)
-            + WarrantyTableBuilder.create_table(snapshots.warranty),
-        )))
+    def request_snapshot(cls, jwt: str) -> Snapshots:
+        snapshot_response = requests.get(config("JORMUNGANDR_GET_USER_SNAPSHOT"), headers={"x-thebes-answer": jwt})
+        if snapshot_response.status_code != HTTPStatus.OK:
+            raise ValueError("Falha ao obter Snapshots")  # TODO: Melhorar erro
+        snapshot_json = snapshot_response.json()
+        snapshot = Snapshots(**snapshot_json.get("result"))
         return snapshot
-

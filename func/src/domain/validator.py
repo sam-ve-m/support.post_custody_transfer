@@ -1,28 +1,22 @@
 # Standards
 import re
+from typing import List
 
 # Third part
 from pydantic import BaseModel, validator
 
 
-class TicketValidator(BaseModel):
-    stvm: str
+class Base64(BaseModel):
+    name: str
+    content: str
 
-    @validator("stvm", always=True, allow_reuse=True)
-    def validate_stvm(cls, stvm):
+    @validator("content", allow_reuse=True)
+    def validate_content(cls, content):
         base_64_regex = r'^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$'
-        if re.match(base_64_regex, stvm):
-            return stvm
+        if re.match(base_64_regex, content):
+            return content
         raise ValueError("Base64 file content are invalid")
 
 
-class Snapshots(BaseModel):
-    pid: dict
-    onboarding: list
-    wallet: list
-    vai_na_cola: list
-    blocked_assets: list
-    user_blocks: dict
-    warranty_assets: list
-    warranty: dict
-
+class TicketValidator(BaseModel):
+    attachments: List[Base64]

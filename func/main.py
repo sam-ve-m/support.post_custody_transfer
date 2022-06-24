@@ -4,30 +4,32 @@ from func.src.domain.exceptions import InvalidJwtToken
 from func.src.domain.response.model import ResponseModel
 from func.src.domain.validator import TicketValidator
 from func.src.services.jwt import JwtService
-from func.src.services.post_user_ticket import CreateTicketOfCustodyTransferService
+from func.src.services.post_user_ticket import CreateTicketService
 
 # Standards
 from http import HTTPStatus
 
 # Third party
 from etria_logger import Gladsheim
-from flask import request
+import flask
+
+from func.src.services.snapshot import SnapshotUserDataService
 
 
 def post_user_ticket():
-    raw_ticket_params = request.json
+    raw_ticket_params = flask.request.json
     message = "Jormungandr::post_user_ticket"
-    jwt = request.headers.get("x-thebes-answer")
+    jwt = flask.request.headers.get("x-thebes-answer")
     try:
         ticket_params = TicketValidator(**raw_ticket_params)
         JwtService.apply_authentication_rules(jwt=jwt)
         decoded_jwt = JwtService.decode_jwt(jwt=jwt)
-        client_ticket_service = CreateTicketOfCustodyTransferService(
-            jwt=jwt,
+        snapshot = SnapshotUserDataService.get_snapshot(jwt=jwt)
+        success = CreateTicketService.set_tickets(
+            snapshot=snapshot,
             params=ticket_params,
             decoded_jwt=decoded_jwt,
         )
-        success = client_ticket_service.set_tickets()
 
         response_model = ResponseModel.build_response(
             success=success,

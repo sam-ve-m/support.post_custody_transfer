@@ -1,6 +1,6 @@
 from etria_logger import Gladsheim
-from pymongo import MongoClient
 from decouple import config
+import pymongo
 
 
 class MongoInfrastructure:
@@ -10,7 +10,7 @@ class MongoInfrastructure:
     def get_connection(cls):
         if cls.client is None:
             try:
-                cls.client = MongoClient(config("MONGO_CLIENT_URL"))
+                cls.client = pymongo.MongoClient(config("MONGO_CLIENT_URL"))
             except Exception as ex:
                 Gladsheim.error(
                     error=ex,
