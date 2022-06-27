@@ -24,9 +24,9 @@ def post_user_ticket():
         ticket_params = TicketValidator(**raw_ticket_params)
         JwtService.apply_authentication_rules(jwt=jwt)
         decoded_jwt = JwtService.decode_jwt(jwt=jwt)
-        snapshot = SnapshotUserDataService.get_snapshot(jwt=jwt)
+        # snapshot = SnapshotUserDataService.get_snapshot(jwt=jwt)
         success = CreateTicketService.set_tickets(
-            snapshot=snapshot,
+            snapshot="",
             params=ticket_params,
             decoded_jwt=decoded_jwt,
         )
