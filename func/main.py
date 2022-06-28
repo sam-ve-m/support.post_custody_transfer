@@ -1,10 +1,10 @@
 # Jormungandr
-from func.src.domain.enums import CodeResponse
-from func.src.domain.exceptions import InvalidJwtToken
-from func.src.domain.response.model import ResponseModel
-from func.src.domain.validator import TicketValidator
-from func.src.services.jwt import JwtService
-from func.src.services.post_user_ticket import CreateTicketService
+from src.domain.enums import CodeResponse
+from src.domain.exceptions import InvalidJwtToken
+from src.domain.response.model import ResponseModel
+from src.domain.validator import TicketValidator
+from src.services.jwt import JwtService
+from src.services.post_user_ticket import CreateTicketService
 
 # Standards
 from http import HTTPStatus
@@ -13,7 +13,7 @@ from http import HTTPStatus
 from etria_logger import Gladsheim
 import flask
 
-from func.src.services.snapshot import SnapshotUserDataService
+from src.services.snapshot import SnapshotUserDataService
 
 
 def post_user_ticket():
@@ -26,7 +26,7 @@ def post_user_ticket():
         decoded_jwt = JwtService.decode_jwt(jwt=jwt)
         # snapshot = SnapshotUserDataService.get_snapshot(jwt=jwt)
         success = CreateTicketService.set_tickets(
-            snapshot="",
+            snapshot="Cliente deseja fazer uma transferência de custódia",
             params=ticket_params,
             decoded_jwt=decoded_jwt,
         )
