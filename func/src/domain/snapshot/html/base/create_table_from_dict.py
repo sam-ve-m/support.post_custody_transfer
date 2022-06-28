@@ -1,7 +1,7 @@
 from typing import List
 
-from func.src.domain.snapshot.html.base.create_table import BaseTableDTO
-from func.src.domain.snapshot.model import Cell
+from ..base.create_table import BaseTableDTO
+from ...model import Cell
 
 
 class TableFromDictDTO(BaseTableDTO):
