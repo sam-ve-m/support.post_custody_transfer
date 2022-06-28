@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from ..base.create_table_from_list import TableFromListDTO
+from func.src.domain.snapshot.html.base.create_table_from_list import TableFromListDTO
 from func.src.domain.snapshot.model import Cell
 
 dummy_empty_user_data = []

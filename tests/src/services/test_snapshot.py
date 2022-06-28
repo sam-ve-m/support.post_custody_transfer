@@ -2,14 +2,14 @@ from unittest.mock import MagicMock, patch
 
 
 # Jormungandr
-from ..tables.blocked_assets import BlockedAssetsTableDTO
-from ..tables.onboarding import OnboardingTableDTO
-from ..tables.pid import PIDTableDTO
-from ..tables.user_blocks import UserBlocksTableDTO
-from ..tables.vai_na_cola import VaiNaColaTableDTO
-from ..tables.wallet import WalletTableDTO
-from ..tables.warranty import WarrantyTableDTO
-from ..tables.warranty_assets import WarrantyAssetsTableDTO
+from func.src.domain.snapshot.html.tables.blocked_assets import BlockedAssetsTableDTO
+from func.src.domain.snapshot.html.tables.onboarding import OnboardingTableDTO
+from func.src.domain.snapshot.html.tables.pid import PIDTableDTO
+from func.src.domain.snapshot.html.tables.user_blocks import UserBlocksTableDTO
+from func.src.domain.snapshot.html.tables.vai_na_cola import VaiNaColaTableDTO
+from func.src.domain.snapshot.html.tables.wallet import WalletTableDTO
+from func.src.domain.snapshot.html.tables.warranty import WarrantyTableDTO
+from func.src.domain.snapshot.html.tables.warranty_assets import WarrantyAssetsTableDTO
 from func.src.services.snapshot import SnapshotUserDataService
 
 dummy_jwt = "sd8a1f95dba9e85rza16s5d1vads"

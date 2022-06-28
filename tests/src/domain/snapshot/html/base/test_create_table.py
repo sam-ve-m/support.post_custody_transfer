@@ -1,4 +1,4 @@
-from ..base.create_table import BaseTableDTO
+from func.src.domain.snapshot.html.base.create_table import BaseTableDTO
 
 
 dummy_table = "<table><b><th><td>"

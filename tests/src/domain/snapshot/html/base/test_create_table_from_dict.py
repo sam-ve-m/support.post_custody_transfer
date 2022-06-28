@@ -1,4 +1,4 @@
-from ..base.create_table_from_dict import TableFromDictDTO
+from func.src.domain.snapshot.html.base.create_table_from_dict import TableFromDictDTO
 from unittest.mock import patch
 
 from func.src.domain.snapshot.model import Cell
