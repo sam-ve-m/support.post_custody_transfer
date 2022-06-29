@@ -2,7 +2,7 @@ apiVersion: fission.io/v1
 kind: HTTPTrigger
 metadata:
   creationTimestamp: null
-  name: 74b43def-38b9-4404-b094-ccb27eb45e86
+  name: post-custody-route
   namespace: default
 spec:
   createingress: false
