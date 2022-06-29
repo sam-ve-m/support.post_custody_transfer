@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: fn-get-state-vs
+  name: post-custody-fn-vs
   namespace: fission
 spec:
   hosts:
