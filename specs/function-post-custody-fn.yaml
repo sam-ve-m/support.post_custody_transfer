@@ -1,14 +1,14 @@
 include:
 - ./func/*
 kind: ArchiveUploadSpec
-name: func-golW
+name: func-3s6X
 
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: post-custody-fn-b82bf410-a0aa-48c7-ae94-c99f75edb4df
+  name: post-custody-fn-29940026-24f3-468d-b448-a0922b583618
   namespace: default
 spec:
   deployment:
@@ -19,10 +19,10 @@ spec:
   source:
     checksum: {}
     type: url
-    url: archive://func-golW
+    url: archive://func-3s6X
 status:
   buildstatus: pending
-  lastUpdateTimestamp: "2022-06-28T13:35:27Z"
+  lastUpdateTimestamp: "2022-06-29T13:56:21Z"
 
 ---
 apiVersion: fission.io/v1
@@ -49,7 +49,7 @@ spec:
   package:
     functionName: main.post_user_ticket
     packageref:
-      name: post-custody-fn-b82bf410-a0aa-48c7-ae94-c99f75edb4df
+      name: post-custody-fn-29940026-24f3-468d-b448-a0922b583618
       namespace: default
   requestsPerPod: 1
   resources: {}
