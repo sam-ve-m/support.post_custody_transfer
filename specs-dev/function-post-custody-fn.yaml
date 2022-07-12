@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-8xvp
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: post-custody-fn-fb3ae1b4-9079-4db1-81f6-9736301142b6
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: post-custody-env
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-8xvp
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-07-12T18:27:49Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: post-custody-fn
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: post-custody-env
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.post_user_ticket
+    packageref:
+      name: post-custody-fn-fb3ae1b4-9079-4db1-81f6-9736301142b6
+      namespace: default
+  requestsPerPod: 1
+  resources: {}
