@@ -35,7 +35,7 @@ spec:
             - name: ZENDESK_PASSWORD
               value: "bezfiz-dyhqu3-noqmEg"
             - name: ZENDESK_SUBDOMAIN
-              value: "sigame"
+              value: "ligainvest"
             - name: AWS_BUCKET_USERS_FILES
               value: "dtvm-users-files-uat"
             - name: AWS_ACCESS_KEY_ID
