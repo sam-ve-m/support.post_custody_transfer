@@ -1,1 +1,1 @@
-**prod-values.yaml  filter=git-crypt diff=git-crypt
+specs-prod/env*  filter=git-crypt diff=git-crypt
