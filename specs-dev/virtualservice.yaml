@@ -11,9 +11,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /router/ticket/custody_transfer
+        prefix: /router/support/post-ticket-custody-transfer
     rewrite:
-      uri: /ticket/custody_transfer
+      uri: /support/post-ticket-custody-transfer
     route:
     - destination:
         host: router.fission.svc.cluster.local
