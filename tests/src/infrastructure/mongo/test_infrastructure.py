@@ -5,7 +5,7 @@ import pytest
 from decouple import AutoConfig
 from etria_logger import Gladsheim
 
-from func.src.infrastructure.mongo.infrastructure import MongoInfrastructure
+from src.infrastructure.mongo.infrastructure import MongoInfrastructure
 
 dummy_connection = "dummy connection"
 
