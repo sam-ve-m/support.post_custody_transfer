@@ -7,18 +7,12 @@ metadata:
 spec:
   builder:
     command: build
-    container:
-      name: ""
-      resources: {}
     image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
-  imagepullsecret: "nexus-v3"
+  imagepullsecret: ""
   keeparchive: false
   poolsize: 3
   resources: {}
   runtime:
-    container:
-      name: ""
-      resources: {}
     image: nexus.sigame.com.br/python-env-3.8:0.0.5
     podspec:
       containers:
@@ -68,4 +62,8 @@ spec:
               value: "INFO"
             - name: ETRIA_LOG_LEVEL
               value: "INFO"
+            - name: JORMUNGANDR_GET_USER_SNAPSHOT
+              value: "http://10.244.3.88:8888/support/get-user-snapshot"
+            - name: JORMUNGANDR_UPDATE_TICKET_COMMENT
+              value: "http://10.244.3.88:8888/support/update-ticket"
   version: 2
