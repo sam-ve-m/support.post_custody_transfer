@@ -2,23 +2,22 @@
 from base64 import b64decode
 from os import SEEK_SET
 from tempfile import TemporaryFile
-from typing import List
+from typing import List, Any
 
 # Third part
 from etria_logger import Gladsheim
 from zenpy.lib.api_objects import User, Ticket, Via, Comment, Attachment
 
 # Jormungandr
-from ...domain.enums import TicketType
-from ...domain.validator import Base64
+from ...domain.exceptions.exceptions import ErrorWithZendesk
+from ...domain.models.request.model import Base64
+from ...domain.models.user import UserData
 from ...infrastructure.zendesk.infrastructure import ZendeskInfrastructure
 
 
 class ZendeskRepository:
     infra = ZendeskInfrastructure
     method = Via(source="api")
-    SUBJECT = "Transferência de Custódia"
-    TICKET_TYPE = TicketType.PROBLEM.value
 
     @classmethod
     def set_attachment(cls, attachment: Base64) -> Attachment:
@@ -44,11 +43,11 @@ class ZendeskRepository:
             return user_zenpy
 
     @classmethod
-    def create_user(cls, user_data: dict) -> User:
+    def create_user(cls, user_data: UserData) -> User:
         user_obj = User(
-            name=user_data["nick_name"],
-            email=user_data["email"],
-            external_id=user_data["unique_id"]
+            email=user_data.email,
+            name=user_data.nick_name,
+            external_id=user_data.unique_id
         )
         zenpy_client = cls.infra.get_connection()
         try:
@@ -59,38 +58,38 @@ class ZendeskRepository:
                 error=ex,
                 message=f"Jormungandr::CreateTicketService::create_user::Failed to create user",
             )
-            raise ex
+            raise ErrorWithZendesk()
 
     @staticmethod
     def set_comment(user: User, snapshot: str, attachments_token: List[Attachment]) -> Comment:
         comment = Comment(
+            public=False,
             author_id=user.id,
             html_body=snapshot,
             uploads=attachments_token,
-            public=False,
         )
         return comment
 
-    @classmethod
-    def set_ticket(cls, user: User, comment: Comment) -> Ticket:
+    @staticmethod
+    def set_ticket(subject: str, user: User, ticket_type: str, comment: Comment) -> Ticket:
         ticket = Ticket(
-            subject=cls.SUBJECT,
-            requester_id=user.id,
-            ticket_type=cls.TICKET_TYPE,
-            via=ZendeskRepository.method,
             comment=comment,
+            subject=subject,
+            requester_id=user.id,
+            ticket_type=ticket_type,
+            via=ZendeskRepository.method,
         )
         return ticket
 
     @classmethod
-    def post_ticket(cls, ticket: Ticket) -> bool:
+    def post_ticket(cls, ticket: Ticket) -> Any:
         zenpy_client = cls.infra.get_connection()
         try:
-            zenpy_client.tickets.create(ticket)
-            return True
+            open_ticket = zenpy_client.tickets.create(ticket)
+            return open_ticket
         except Exception as ex:
             Gladsheim.error(
                 error=ex,
                 message=f"Jormungandr::CreateTicketService::set_tickets::Failed to create ticket",
             )
-            raise ex
+            raise ErrorWithZendesk()

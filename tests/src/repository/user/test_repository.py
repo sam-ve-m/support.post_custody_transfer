@@ -4,7 +4,7 @@ import pytest
 from decouple import AutoConfig
 from etria_logger import Gladsheim
 
-from func.src.repository.user.repository import UserRepository
+from src.repository.user.repository import UserRepository
 
 dummy_collection = {}
 fake_collection = MagicMock()
