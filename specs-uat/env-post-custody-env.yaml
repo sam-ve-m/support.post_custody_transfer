@@ -13,7 +13,6 @@ spec:
     image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
   imagepullsecret: "nexus-v3"
   keeparchive: false
-  poolsize: 3
   resources: {}
   runtime:
     container:
@@ -31,9 +30,9 @@ spec:
             - name: USER_MONGODB_COLLECTION
               value: "users"
             - name: ZENDESK_EMAIL
-              value: "Tech@lionx.com.br"
+              value: "zendesk@ligainvest.com.br"
             - name: ZENDESK_PASSWORD
-              value: "bezfiz-dyhqu3-noqmEg"
+              value: "5FaDQ&7C4GOPc*vm!Pwyp"
             - name: ZENDESK_SUBDOMAIN
               value: "ligainvest"
             - name: AWS_BUCKET_USERS_FILES
@@ -68,4 +67,4 @@ spec:
               value: "INFO"
             - name: ETRIA_LOG_LEVEL
               value: "INFO"
-  version: 2
+  version: 3
