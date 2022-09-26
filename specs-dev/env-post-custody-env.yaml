@@ -10,7 +10,6 @@ spec:
     image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
   imagepullsecret: "nexus-v3"
   keeparchive: false
-  poolsize: 3
   resources: {}
   runtime:
     image: nexus.sigame.com.br/python-env-3.8:0.0.5
@@ -25,9 +24,9 @@ spec:
             - name: USER_MONGODB_COLLECTION
               value: "users"
             - name: ZENDESK_EMAIL
-              value: "Tech@lionx.com.br"
+              value: "zendesk@ligainvest.com.br"
             - name: ZENDESK_PASSWORD
-              value: "bezfiz-dyhqu3-noqmEg"
+              value: "5FaDQ&7C4GOPc*vm!Pwyp"
             - name: ZENDESK_SUBDOMAIN
               value: "ligainvest"
             - name: AWS_BUCKET_USERS_FILES
@@ -66,4 +65,4 @@ spec:
               value: "http://router.fission.svc.cluster.local/support/get-user-snapshot"
             - name: JORMUNGANDR_UPDATE_TICKET_COMMENT
               value: "http://router.fission.svc.cluster.local/support/update-ticket"
-  version: 2
+  version: 3
