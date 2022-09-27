@@ -7,10 +7,9 @@ metadata:
 spec:
   builder:
     command: build
-    image: nexus.sigame.com.br/python-builder-3.8:0.0.2
+    image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
   imagepullsecret: "nexus-v3"
   keeparchive: false
-  poolsize: 3
   resources: {}
   runtime:
     image: nexus.sigame.com.br/python-env-3.8:0.0.5
@@ -19,17 +18,17 @@ spec:
         - name: post-custody-env
           env:
             - name: MONGO_CLIENT_URL
-              value: "mongodb://bnd:jkl321pqr@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
+              value: "mongodb://jormungandr:LIwn1In32LdowPqma@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
             - name: USER_MONGODB_DATABASE
               value: "lionx"
             - name: USER_MONGODB_COLLECTION
               value: "users"
             - name: ZENDESK_EMAIL
-              value: "Tech@lionx.com.br"
+              value: "zendesk@ligainvest.com.br"
             - name: ZENDESK_PASSWORD
-              value: "bezfiz-dyhqu3-noqmEg"
+              value: "5FaDQ&7C4GOPc*vm!Pwyp"
             - name: ZENDESK_SUBDOMAIN
-              value: "sigame"
+              value: "ligainvest"
             - name: AWS_BUCKET_USERS_FILES
               value: "dtvm-users-files-dev"
             - name: AWS_ACCESS_KEY_ID
@@ -41,33 +40,29 @@ spec:
             - name: AWS_BUCKET_USERS_SELF
               value: "dtvm-user-selfie-dev"
             - name: HEIMDALL_FILE_BUCKET_NAME
-              value: heimdall_rsa
+              value: "heimdall_rsa"
             - name: HEIMDALL_AWS_ACCESS_KEY_ID
-              value: AKIATZVFXI25USQWCS5O
+              value: "AKIATZVFXI25USQWCS5O"
             - name: HEIMDALL_AWS_SECRET_ACCESS_KEY
-              value: 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
+              value: "/5pswHkrCgWhMYrV7TM7oVm8VtulfzdYKE2rlS8f"
             - name: HEIMDALL_REGION_NAME
-              value: sa-east-1
+              value: "sa-east-1"
             - name: HEIMDALL_BUCKET_NAME_KEY
-              value: auth-gateway-keys-dev
+              value: "auth-gateway-keys-dev"
             - name: HEIMDALL_AWS_BUCKET_USERS_FILES
-              value: dtvm-users-files
+              value: "dtvm-users-files"
             - name: HEIMDALL_AWS_BUCKET_TERMS
-              value: dtvm-terms
+              value: "dtvm-terms"
             - name: HEIMDALL_JWT_REQUIRED_FIELDS
               value: "[]"
-            - name: HEIMDALL_REDIS_HOST
-              value: "172.30.11.235"
-            - name: HEIMDALL_REDIS_PORT
-              value: "6379"
-            - name: HEIMDALL_REDIS_DB
-              value: "0"
-            - name: HEIMDALL_REDIS_USER
-              value: bnd
-            - name: HEIMDALL_REDIS_PASSWORD
-              value: jkl321pqr
+            - name: HEIMDALL_REDIS_URL
+              value: "redis://heimdal:LLOnmUUffhaUHnewIz@172.30.11.235:6379?db=1"
             - name: ROOT_LOG_LEVEL
-              value: INFO
+              value: "INFO"
             - name: ETRIA_LOG_LEVEL
-              value: INFO
-  version: 2
+              value: "INFO"
+            - name: JORMUNGANDR_GET_USER_SNAPSHOT
+              value: "http://router.fission.svc.cluster.local/support/get-user-snapshot"
+            - name: JORMUNGANDR_UPDATE_TICKET_COMMENT
+              value: "http://router.fission.svc.cluster.local/support/update-ticket"
+  version: 3
