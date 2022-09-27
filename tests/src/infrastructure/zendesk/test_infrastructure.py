@@ -5,7 +5,7 @@ import pytest
 from decouple import AutoConfig
 from etria_logger import Gladsheim
 
-from func.src.infrastructure.zendesk.infrastructure import ZendeskInfrastructure
+from src.infrastructure.zendesk.infrastructure import ZendeskInfrastructure
 
 dummy_connection = "dummy connection"
 

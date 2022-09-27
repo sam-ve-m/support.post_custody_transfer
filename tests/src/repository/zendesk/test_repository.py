@@ -1,32 +1,13 @@
-# Standards
-from base64 import b64decode
-from os import SEEK_SET
-from tempfile import TemporaryFile
-# Third part
-from unittest.mock import MagicMock, patch
-
 import pytest
 from etria_logger import Gladsheim
-from zenpy.lib.api_objects import User, Ticket, Comment, Attachment, CustomField
-
-# Jormungandr
-from func.src.repository.zendesk.repository import ZendeskRepository
+from unittest.mock import MagicMock, patch
+from src.domain.exceptions.exceptions import ErrorWithZendesk
+from src.repository.zendesk.repository import ZendeskRepository
+from zenpy.lib.api_objects import User, Ticket, Comment, CustomField
 
 fake_zenpy_client = MagicMock()
 fake_infra = MagicMock()
 fake_infra.get_connection.return_value = fake_zenpy_client
-
-
-@patch.object(ZendeskRepository, "_upload_file")
-def set_attachment(cls, attachment) -> Attachment:
-    ZendeskRepository.set_attachment()
-    file_bytes = b64decode(attachment.content)
-    with TemporaryFile() as temp_file:
-        temp_file.write(file_bytes)
-        temp_file.seek(SEEK_SET)
-        token = cls._upload_file(temp_file, attachment.name)
-        return token
-
 
 dummy_name = "name"
 dummy_token = "token"
@@ -59,7 +40,7 @@ def test_get_user_no_user(monkeypatch):
     assert response is None
 
 
-dummy_user_data = {"nick_name": True, "email": True, "unique_id": True}
+dummy_user_data = MagicMock(nick_name=True, email=True, unique_id=True)
 
 
 @patch.object(User, "__init__", return_value=None)
@@ -70,7 +51,7 @@ def test_create_user(mocked_user, monkeypatch):
     assert response == dummy_user
 
 
-dummy_exception = Exception()
+dummy_exception = ErrorWithZendesk()
 expected_create_exception_message = "Jormungandr::CreateTicketService::create_user::Failed to create user"
 
 
@@ -79,7 +60,7 @@ expected_create_exception_message = "Jormungandr::CreateTicketService::create_us
 def test_create_user_with_errors(mocked_user, mocked_logger, monkeypatch):
     fake_zenpy_client.users.create.side_effect = dummy_exception
     monkeypatch.setattr(ZendeskRepository, "infra", fake_infra)
-    with pytest.raises(dummy_exception.__class__):
+    with pytest.raises(ErrorWithZendesk):
         ZendeskRepository.create_user(dummy_user_data)
     mocked_logger.assert_called_once_with(error=dummy_exception, message=expected_create_exception_message)
 
@@ -102,19 +83,20 @@ def test_set_comment(mocked_comment):
 
 dummy_id = "id"
 dummy_value = "value"
-dummy_custom_field = [MagicMock(id=dummy_id, value=dummy_value)]
 
 
 dummy_method = "method"
-dummy_subject = "Transferência de Custódia"
+dummy_subject = "subject"
 dummy_comment = "comment"
-dummy_ticket_type = "problem"
+dummy_ticket_type = "ticket_type"
 
 
 @patch.object(Ticket, "__init__", return_value=None)
 def test_set_ticket(mocked_ticket, monkeypatch):
     monkeypatch.setattr(ZendeskRepository, "method", dummy_method)
-    ZendeskRepository.set_ticket(stub_user, dummy_comment)
+    ZendeskRepository.set_ticket(
+        dummy_subject, stub_user, dummy_ticket_type, dummy_comment
+    )
     mocked_ticket.assert_called_once_with(
         subject=dummy_subject,
         requester_id=dummy_user,
@@ -131,7 +113,7 @@ def test_post_ticket(monkeypatch):
     fake_zenpy_client.tickets.create.return_value = dummy_user
     monkeypatch.setattr(ZendeskRepository, "infra", fake_infra)
     response = ZendeskRepository.post_ticket(dummy_ticket)
-    assert response is True
+    assert response == dummy_user
 
 
 expected_post_ticket_exception_message = "Jormungandr::CreateTicketService::set_tickets::Failed to create ticket"
