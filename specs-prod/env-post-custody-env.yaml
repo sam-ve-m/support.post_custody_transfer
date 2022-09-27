@@ -53,20 +53,16 @@ spec:
               value: "sa-east-1"
             - name: HEIMDALL_BUCKET_NAME_KEY        
               value: "auth-gateway-keys-prod"
+            - name: HEIMDALL_REDIS_URL
+              value: "redis://heimdal:FAhjlkyrliu6789032hgBfda@172.20.26.230:6379?db=1"
             - name: HEIMDALL_JWT_REQUIRED_FIELDS    
               value: "[]"
-            - name: HEIMDALL_REDIS_HOST             
-              value: "172.20.26.230"
-            - name: HEIMDALL_REDIS_PORT             
-              value: "6380"
-            - name: HEIMDALL_REDIS_DB               
-              value: "0"
-            - name: HEIMDALL_REDIS_USER             
-              value: "heimdal"
-            - name: HEIMDALL_REDIS_PASSWORD         
-              value: "FAhjlkyrliu6789032hgBfda"
             - name: ROOT_LOG_LEVEL                  
               value: "INFO"
             - name: ETRIA_LOG_LEVEL                 
               value: "INFO"
+            - name: JORMUNGANDR_GET_USER_SNAPSHOT
+              value: "http://router.fission.svc.cluster.local/support/get-user-snapshot"
+            - name: JORMUNGANDR_UPDATE_TICKET_COMMENT
+              value: "http://router.fission.svc.cluster.local/support/update-ticket"
   version: 3

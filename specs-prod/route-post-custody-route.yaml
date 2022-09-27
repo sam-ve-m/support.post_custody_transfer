@@ -14,10 +14,10 @@ spec:
   ingressconfig:
     annotations: null
     host: '*'
-    path: /ticket/custody_transfer
+    path: /support/post-ticket-user-custody-transfer
     tls: ""
   method: ""
   methods:
   - POST
   prefix: ""
-  relativeurl: /ticket/custody_transfer
+  relativeurl: /support/post-ticket-user-custody-transfer

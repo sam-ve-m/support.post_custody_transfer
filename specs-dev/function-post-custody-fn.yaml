@@ -8,7 +8,7 @@ apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: post-custody-fn-cb3ccd3a-13a8-408f-a6d3-b27e284acffb
+  name: post-custody-route
   namespace: default
 spec:
   deployment:
@@ -49,7 +49,7 @@ spec:
   package:
     functionName: main.post_user_ticket
     packageref:
-      name: post-custody-fn-cb3ccd3a-13a8-408f-a6d3-b27e284acffb
+      name: post-custody-route
       namespace: default
   requestsPerPod: 1
   resources: {}
